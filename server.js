@@ -38,9 +38,12 @@ app.use(morgan("dev"));
 const listSections = require("./controllers/01_sections/listSections");
 const getSection = require("./controllers/01_sections/getSection");
 const sectionExists = require("./middlewares/01_sectionExists");
+const newSection = require("./controllers/01_sections/newSection");
 
-app.get("/sections", sectionExists, listSections);
+app.get("/sections", listSections);
 app.get("/sections/:idSection", sectionExists, getSection);
+
+app.post("/sections", newSection);
 
 /*
  *
@@ -54,9 +57,12 @@ app.get("/sections/:idSection", sectionExists, getSection);
 const listSessions = require("./controllers/02_sessions/listSessions");
 const getSession = require("./controllers/02_sessions/getSession");
 const sessionExists = require("./middlewares/02_sessionExists");
+const newSession = require("./controllers/02_sessions/newSession");
 
-app.get("/sessions", sessionExists, listSessions);
+app.get("/sessions", listSessions);
 app.get("/sessions/:idSession", sessionExists, getSession);
+
+app.post("/sessions", newSession);
 
 /*
  *
@@ -71,7 +77,7 @@ const listFilms = require("./controllers/03_films/listFilms");
 const getFilms = require("./controllers/03_films/getFilm");
 const filmExists = require("./middlewares/03_filmExists");
 
-app.get("/films", filmExists, listFilms);
+app.get("/films", listFilms);
 app.get("/films/:idFilm", filmExists, getFilms);
 
 /*
@@ -86,7 +92,7 @@ const listPeople = require("./controllers/04_people/listPeople");
 const getPeople = require("./controllers/04_people/getPeople");
 const peopleExists = require("./middlewares/04_peopleExists");
 
-app.get("/people", peopleExists, listPeople);
+app.get("/people", listPeople);
 app.get("/people/:idPeople", peopleExists, getPeople);
 
 /* */
