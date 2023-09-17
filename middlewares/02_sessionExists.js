@@ -8,7 +8,11 @@ const sessionExists = async (req, res, next) => {
   try {
     connection = await getConnection();
 
-    const { idSession } = req.params;
+    let { idSession } = req.params;
+
+    if (!idSession) {
+      idSession = req.body.idSession;
+    }
 
     // Comprobamos que el ejercicio exista.
     const [sessions] = await connection.query(

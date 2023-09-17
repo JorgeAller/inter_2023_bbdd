@@ -1,4 +1,5 @@
 const selectAllSectionsQuery = require("../../bbdd/queries/01_sections/selectAllSectionsQuery");
+const selectSessionsByIdSectionQuery = require("../../bbdd/queries/02_sessions/selectSessionsByIdSectionQuery");
 
 const listSections = async (req, res, next) => {
   try {
@@ -6,7 +7,7 @@ const listSections = async (req, res, next) => {
 
     res.send({
       status: "ok",
-      message: "Aquí tienes las secciones:",
+      message: "Aquí tienes las secciones con sus sesiones:",
       data: { sections },
     });
   } catch (err) {

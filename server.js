@@ -54,6 +54,7 @@ app.post("/sections", newSection);
  *
  */
 
+const listSessionsByIdSection = require("./controllers/02_sessions/listSessionsByIdSection");
 const listSessions = require("./controllers/02_sessions/listSessions");
 const getSession = require("./controllers/02_sessions/getSession");
 const sessionExists = require("./middlewares/02_sessionExists");
@@ -61,6 +62,11 @@ const newSession = require("./controllers/02_sessions/newSession");
 
 app.get("/sessions", listSessions);
 app.get("/sessions/:idSession", sessionExists, getSession);
+app.get(
+  "/sessionsByIdSection/:idSection",
+  sectionExists,
+  listSessionsByIdSection
+);
 
 app.post("/sessions", newSession);
 
@@ -75,10 +81,13 @@ app.post("/sessions", newSession);
 
 const listFilms = require("./controllers/03_films/listFilms");
 const getFilms = require("./controllers/03_films/getFilm");
+const newFilm = require("./controllers/03_films/newFilm");
 const filmExists = require("./middlewares/03_filmExists");
 
 app.get("/films", listFilms);
 app.get("/films/:idFilm", filmExists, getFilms);
+
+app.post("/films", sessionExists, newFilm);
 
 /*
  * ########################
