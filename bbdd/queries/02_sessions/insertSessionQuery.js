@@ -3,6 +3,7 @@ const getConnection = require("../../getConnection");
 const insertSessionQuery = async (
   idSection,
   title,
+  weekDay,
   date,
   hour,
   place,
@@ -18,10 +19,21 @@ const insertSessionQuery = async (
     // Insertamos la sesión y obtenemos los datos de la misma.
     const [newSession] = await connection.query(
       `
-                INSERT INTO sessions (idSection, title, date, hour, place, duration, bio, cur_text, createdAt)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO sessions (idSection, title, weekDay, date, hour, place, duration, bio, cur_text, createdAt)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             `,
-      [idSection, title, date, hour, place, duration, bio, cur_text, new Date()]
+      [
+        idSection,
+        title,
+        weekDay,
+        date,
+        hour,
+        place,
+        duration,
+        bio,
+        cur_text,
+        new Date(),
+      ]
     );
 
     // Retornamos el id que le ha asignado la base de datos a esta nueva sesión

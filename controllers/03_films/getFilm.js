@@ -4,7 +4,7 @@ const getFilm = async (req, res, next) => {
   try {
     const { idFilm } = req.params;
     const film = await selectFilmByIdQuery(idFilm);
-    console.log("controller", film);
+
     res.send({
       status: "ok",
       message: `Película id: ${idFilm}`,

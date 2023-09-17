@@ -1,6 +1,7 @@
+const insertPhotoSectionQuery = require("../../bbdd/queries/01_sections/insertPhotoSectionQuery");
 const insertSectionQuery = require("../../bbdd/queries/01_sections/insertSectionQuery");
 
-const { generateError } = require("../../helpers");
+const { generateError, savePhoto } = require("../../helpers");
 
 const newSection = async (req, res, next) => {
   try {
@@ -29,6 +30,18 @@ const newSection = async (req, res, next) => {
       cur_text
     );
 
+    let image;
+
+    if (!req.files?.media) {
+      throw generateError("Faltan campos", 400);
+    }
+
+    if (req.files.media) {
+      image = await savePhoto(req.files.media);
+
+      await insertPhotoSectionQuery(image, idSection);
+    }
+
     res.send({
       status: "ok",
       data: {
@@ -39,6 +52,7 @@ const newSection = async (req, res, next) => {
           short_desc,
           bio,
           cur_text,
+          image,
           createdAt: new Date(),
         },
       },

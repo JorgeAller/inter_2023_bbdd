@@ -4,12 +4,15 @@ CREATE DATABASE IF NOT EXISTS inter_2023;
 USE inter_2023;
 
 DROP TABLE IF EXISTS sections;
+DROP TABLE IF EXISTS sectionsMedia;
 DROP TABLE IF EXISTS sessions;
+DROP TABLE IF EXISTS sessionsMedia;
 DROP TABLE IF EXISTS basic_info;
 DROP TABLE IF EXISTS general_info;
 DROP TABLE IF EXISTS technical_info;
 DROP TABLE IF EXISTS team;
 DROP TABLE IF EXISTS films;
+DROP TABLE IF EXISTS filmsMedia;
 DROP TABLE IF EXISTS people;
 DROP TABLE IF EXISTS people_films;
 
@@ -24,12 +27,21 @@ CREATE TABLE IF NOT EXISTS sections (
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS sectionsMedia (
+	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(100) NOT NULL,
+	idSection INT UNSIGNED NOT NULL,
+	FOREIGN KEY (idSection) REFERENCES sections(id),
+	createdAt TIMESTAMP NOT NULL,
+);
+
 
 CREATE TABLE IF NOT EXISTS sessions (
 	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
 	idSection INT UNSIGNED NOT NULL,
     FOREIGN KEY (idSection) REFERENCES sections (id),
 	title VARCHAR(100) NOT NULL,
+    weekDay VARCHAR(20) NOT NULL,
     date DATE,
     hour TIME,
     place VARCHAR(50),
@@ -38,6 +50,14 @@ CREATE TABLE IF NOT EXISTS sessions (
     cur_text VARCHAR(1000),    
     image VARCHAR(100),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS sessionsMedia (
+	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(100) NOT NULL,
+	idSession INT UNSIGNED NOT NULL,
+	FOREIGN KEY (idSession) REFERENCES sessions(id),
+	createdAt TIMESTAMP NOT NULL,
 );
 
 CREATE TABLE IF NOT EXISTS basic_info (
@@ -91,6 +111,8 @@ CREATE TABLE IF NOT EXISTS team (
 
 CREATE TABLE IF NOT EXISTS films (
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    idSession INT UNSIGNED NOT NULL,
+    FOREIGN KEY (idSession) REFERENCES sessions (id),
     basic_info_id INT UNSIGNED,
     general_info_id INT UNSIGNED,
     technical_info_id INT UNSIGNED,
@@ -103,6 +125,14 @@ CREATE TABLE IF NOT EXISTS films (
     FOREIGN KEY (general_info_id) REFERENCES general_info (id),
     FOREIGN KEY (technical_info_id) REFERENCES technical_info (id),
     FOREIGN KEY (team_id) REFERENCES team (id)
+);
+
+CREATE TABLE IF NOT EXISTS filmsMedia (
+	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(100) NOT NULL,
+	idFilm INT UNSIGNED NOT NULL,
+	FOREIGN KEY (idFilm) REFERENCES films(id),
+	createdAt TIMESTAMP NOT NULL,
 );
 
 

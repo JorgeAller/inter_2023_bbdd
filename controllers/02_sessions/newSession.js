@@ -1,15 +1,25 @@
 const insertSessionQuery = require("../../bbdd/queries/02_sessions/insertSessionQuery");
-
-const { generateError } = require("../../helpers");
+const insertPhotoSessionQuery = require("../../bbdd/queries/02_sessions/insertPhotoSessionQuery");
+const { generateError, savePhoto } = require("../../helpers");
 
 const newSession = async (req, res, next) => {
   try {
-    const { idSection, title, date, hour, place, duration, bio, cur_text } =
-      req.body;
+    const {
+      idSection,
+      title,
+      weekDay,
+      date,
+      hour,
+      place,
+      duration,
+      bio,
+      cur_text,
+    } = req.body;
 
     if (
       !idSection ||
       !title ||
+      !weekDay ||
       !date ||
       !hour ||
       !place ||
@@ -34,6 +44,7 @@ const newSession = async (req, res, next) => {
     const idSession = await insertSessionQuery(
       idSection,
       title,
+      weekDay,
       date,
       hour,
       place,
@@ -42,6 +53,18 @@ const newSession = async (req, res, next) => {
       cur_text
     );
 
+    let image;
+
+    if (!req.files?.media) {
+      throw generateError("Faltan campos", 400);
+    }
+
+    if (req.files.media) {
+      image = await savePhoto(req.files.media);
+
+      await insertPhotoSessionQuery(image, idSession);
+    }
+
     res.send({
       status: "ok",
       data: {
@@ -49,12 +72,14 @@ const newSession = async (req, res, next) => {
           id: idSession,
           idSection,
           title,
+          weekDay,
           date,
           hour,
           place,
           duration,
           bio,
           cur_text,
+          image,
           createdAt: new Date(),
         },
       },
