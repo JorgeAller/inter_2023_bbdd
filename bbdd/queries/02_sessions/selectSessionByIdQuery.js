@@ -7,9 +7,16 @@ const selectSessionByIdQuery = async (idSession) => {
     connection = await getConnection();
 
     const [sessions] = await connection.query(
-      `SELECT * FROM sessions S WHERE S.id = ? `,
+      `SELECT
+        S.*,
+        M.name
+      FROM 
+        sessions S 
+        LEFT JOIN sessionsMedia M ON S.id = M.idSession
+        WHERE S.id = ? `,
       [idSession]
     );
+    console.log(sessions);
 
     if (sessions < 1) {
       throw generateError(

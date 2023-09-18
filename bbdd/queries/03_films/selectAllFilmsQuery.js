@@ -42,12 +42,14 @@ const selectAllFilmsQuery = async () => {
         TM.prod, 
         TM.prod_company, 
         TM.distr_company, 
-        TM.participants
+        TM.participants,
+        M.name
       FROM films F 
       LEFT JOIN basic_info B ON F.basic_info_id = B.id
       LEFT JOIN general_info G ON F.general_info_id = G.id
       LEFT JOIN technical_info T ON F.technical_info_id = T.id
       LEFT JOIN team TM ON F.team_id = TM.id
+      LEFT JOIN filmsMedia M ON F.id = M.idFilm
     `);
 
     if (films < 1) {
