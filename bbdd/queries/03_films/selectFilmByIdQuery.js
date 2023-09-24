@@ -14,7 +14,7 @@ const selectFilmByIdQuery = async (idFilm) => {
       G.id AS general_info_id,
       T.id AS technical_info_id,
       TM.id AS team_id,
-      F.idSession
+      F.idSession,
       F.title, 
       F.short_desc, 
       F.image, 
@@ -60,7 +60,7 @@ const selectFilmByIdQuery = async (idFilm) => {
       `,
       [idFilm]
     );
-
+      
     if (films < 1) {
       throw generateError(
         "No se ha encontrado ninguna película con ese id!",

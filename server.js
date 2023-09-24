@@ -79,6 +79,7 @@ app.post("/sessions", newSession);
  *
  */
 
+const listFilmsByIdSession = require("./controllers/03_films/listFilmsByIdSession")
 const listFilms = require("./controllers/03_films/listFilms");
 const getFilms = require("./controllers/03_films/getFilm");
 const newFilm = require("./controllers/03_films/newFilm");
@@ -86,10 +87,12 @@ const filmExists = require("./middlewares/03_filmExists");
 
 app.get("/films", listFilms);
 app.get("/films/:idFilm", filmExists, getFilms);
+app.get("/filmsByIdSession/:idSession", sessionExists, listFilmsByIdSession)
 
 app.post("/films", sessionExists, newFilm);
 
 /*
+ *
  * ########################
  * ## Middlewares people ##
  * ########################
