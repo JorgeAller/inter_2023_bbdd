@@ -103,9 +103,12 @@ app.post("/films", sessionExists, newFilm);
 const listPeople = require("./controllers/04_people/listPeople");
 const getPeople = require("./controllers/04_people/getPeople");
 const peopleExists = require("./middlewares/04_peopleExists");
+const newPeople = require("./controllers/04_people/newPeople");
 
 app.get("/people", listPeople);
 app.get("/people/:idPeople", peopleExists, getPeople);
+
+app.post("/people", newPeople);
 
 /* */
 /* */

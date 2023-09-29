@@ -7,7 +7,7 @@ const newSection = async (req, res, next) => {
   try {
     const { type, title, short_desc, bio, cur_text } = req.body;
 
-    if (!type || !title || !short_desc || !bio || !cur_text) {
+    if (!type || !title || !bio ) {
       throw generateError("Faltan campos", 400);
     }
 

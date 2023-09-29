@@ -8,6 +8,7 @@ const insertFilmQuery = async (
   idTeam,
   title,
   short_desc,
+  idPeople
 ) => {
   let connection;
 
@@ -41,8 +42,20 @@ const insertFilmQuery = async (
       ]
     );
 
-    // Retornamos el id que le ha asignado la base de datos a esta nueva sesión
-    return newFilm.insertId;
+
+
+    const filmId = newFilm.insertId;
+
+    // Ahora, insertamos la relación en la tabla "people_films" usando el parámetro idPeople
+    await connection.query(
+      `
+      INSERT INTO people_films (people_id, films_id, createdAt)
+      VALUES (?, ?)
+      `,
+      [idPeople, filmId, new Date()]
+    );
+
+    return filmId; // Retornamos 
   } finally {
     if (connection) connection.release();
   }

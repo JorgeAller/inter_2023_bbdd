@@ -7,7 +7,7 @@ const selectPeopleByIdQuery = async (idPeople) => {
     connection = await getConnection();
 
     const [people] = await connection.query(
-      `SELECT * FROM people P WHERE P.id = ? `,
+      `SELECT P.*, M.imageName FROM people P LEFT JOIN peopleMedia M ON P.id = M.idPeople WHERE P.id = ? `,
       [idPeople]
     );
     if (people < 1) {

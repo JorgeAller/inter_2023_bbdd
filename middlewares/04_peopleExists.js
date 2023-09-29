@@ -12,7 +12,7 @@ const peopleExists = async (req, res, next) => {
 
     // Comprobamos que el ejercicio exista.
     const [people] = await connection.query(
-      `SELECT * FROM sections WHERE id = ?`,
+      `SELECT * FROM people WHERE id = ?`,
       [idPeople]
     );
 

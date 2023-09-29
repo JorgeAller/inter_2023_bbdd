@@ -8,7 +8,13 @@ const selectSectionByIdQuery = async (idSection) => {
     connection = await getConnection();
 
     const [sections] = await connection.query(
-      `SELECT * FROM sections S WHERE S.id = ? `,
+      `SELECT 
+        S.*,
+        M.name
+      FROM
+        sections S
+        LEFT JOIN sectionsMedia M ON S.id = M.idSection
+        WHERE S.id = ? `,
       [idSection]
     );
 

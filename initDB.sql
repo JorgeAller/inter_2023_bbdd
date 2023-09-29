@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS sections (
     type VARCHAR(50),
     title VARCHAR(100) NOT NULL,
     short_desc VARCHAR(280) NOT NULL,
-    bio VARCHAR(1000),
-    cur_text VARCHAR(1000),    
+    bio TEXT,
+    cur_text TEXT,    
     image VARCHAR(100),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -145,6 +145,14 @@ CREATE TABLE IF NOT EXISTS people (
   type VARCHAR(50) NOT NULL,
   image VARCHAR(100),
   createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS peopleMedia (
+	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(100) NOT NULL,
+	idPeople INT UNSIGNED NOT NULL,
+	FOREIGN KEY (idPeople) REFERENCES people(id),
+	createdAt TIMESTAMP NOT NULL,
 );
 
 

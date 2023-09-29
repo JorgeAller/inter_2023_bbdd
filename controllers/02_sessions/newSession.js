@@ -21,11 +21,8 @@ const newSession = async (req, res, next) => {
       !title ||
       !weekDay ||
       !date ||
-      !hour ||
       !place ||
-      !duration ||
-      !bio ||
-      !cur_text
+      !duration 
     ) {
       throw generateError("Faltan campos", 400);
     }

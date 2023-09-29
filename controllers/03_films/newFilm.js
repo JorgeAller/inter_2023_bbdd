@@ -43,41 +43,21 @@ const newFilm = async (req, res, next) => {
       prod_company,
       distr_company,
       participants,
+      idPeople
     } = req.body;
 
     if (
       !idSession ||
       !title ||
-      !short_desc ||
       !director ||
       !year ||
       !duration ||
-      !sponsor ||
       !country ||
       !bio ||
-      !credits ||
       !genre ||
       !title_original ||
-      !translated_title ||
-      !lang ||
-      !subt_lang ||
-      !film_type ||
-      !premiere_type ||
-      !sound_format ||
-      !color_bn ||
-      !recording_format ||
-      !exhibition_format ||
-      !film_dimmension ||
-      !writer ||
-      !dir_photo ||
-      !editor ||
-      !sound ||
-      !exec_prod ||
-      !other ||
-      !prod ||
-      !prod_company ||
-      !distr_company ||
-      !participants
+      !lang || 
+      !idPeople
     ) {
       throw generateError("Faltan campos", 400);
     }
@@ -130,7 +110,10 @@ const newFilm = async (req, res, next) => {
       idTeam,
       title,
       short_desc,
+      idPeople
     );
+
+  
     let image;
 
     if (!req.files?.media) {

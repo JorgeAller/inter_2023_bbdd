@@ -7,7 +7,7 @@ const selectAllPeopleQuery = async () => {
   try {
     connection = await getConnection();
 
-    const [people] = await connection.query(`SELECT * FROM people`);
+    const [people] = await connection.query(`SELECT P.*, M.imageName  FROM people P LEFT JOIN peopleMedia M ON P.id = M.idPeople`);
 
     if (people < 1) {
       throw generateError("No se ha encontrado ninguna persona!", 404);
